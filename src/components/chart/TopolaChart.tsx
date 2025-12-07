@@ -187,7 +187,10 @@ const TopolaChart = forwardRef<TopolaChartHandle, TopolaChartProps>(({ gedcomDat
           ChartClass = DescendantChart;
           break;
         case 'relatives':
-          ChartClass = RelativesChart;
+          // RelativesChart can cause infinite loops with some data
+          // Fall back to HourglassChart for safety
+          console.warn('RelativesChart has known issues, using HourglassChart instead');
+          ChartClass = HourglassChart;
           break;
         default:
           ChartClass = HourglassChart;

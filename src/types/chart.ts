@@ -30,7 +30,7 @@ export const CHART_CONFIGS: Record<ChartType, { label: string; icon: string; des
     description: 'Shows all descendants in a tree',
   },
   relatives: {
-    label: 'Relatives',
+    label: 'Relatives (Beta)',
     icon: '👥',
     description: 'Shows close family members',
   },
