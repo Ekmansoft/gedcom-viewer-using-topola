@@ -1,5 +1,5 @@
 import { User } from 'lucide-react';
-import type { Profile } from '@/types/gedcom';
+import type { Profile } from '@/types/family';
 
 interface ProfileCardProps {
   profile: Profile;

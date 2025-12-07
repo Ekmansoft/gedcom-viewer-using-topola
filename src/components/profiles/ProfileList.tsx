@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
 import { Search } from 'lucide-react';
-import { useGedcomStore } from '@/store/gedcomStore';
+import { useFamilyStore } from '@/store/familyStore';
 import VirtualProfileList from './VirtualProfileList';
-import type { Profile } from '@/types/gedcom';
+import type { Profile } from '@/types/family';
 
 function ProfileList() {
   const [searchQuery, setSearchQuery] = useState('');

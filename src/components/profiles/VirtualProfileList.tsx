@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { useGedcomStore } from '@/store/gedcomStore';
+import { useFamilyStore } from '@/store/familyStore';
 import ProfileCard from './ProfileCard';
-import type { Profile } from '@/types/gedcom';
+import type { Profile } from '@/types/family';
 
 interface VirtualProfileListProps {
   profiles: Profile[];
