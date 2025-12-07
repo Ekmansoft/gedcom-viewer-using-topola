@@ -16,7 +16,7 @@ A modern, interactive web application for visualizing GEDCOM genealogy files bui
 
 ### Prerequisites
 
-- Node.js 18+ and npm
+- Node.js 20.19+ or 24+ (LTS recommended) and npm
 
 ### Installation
 
@@ -86,9 +86,9 @@ gedcom-viewer/
 
 - **React 18** - UI framework
 - **TypeScript** - Type safety
-- **Vite** - Build tool and dev server
+- **Vite 7** - Build tool and dev server
 - **Zustand** - State management
-- **Topola** - Genealogy visualization library
+- **Topola 3.8** - Genealogy visualization library
 - **D3.js** - Data visualization
 - **Tailwind CSS** - Styling
 - **@tanstack/react-virtual** - Virtual scrolling
@@ -119,7 +119,9 @@ See the [Plugin Development Guide](../GEDCOM_Plugin_Development_Guide.md) for de
 
 - [x] Integrate Topola chart rendering
 - [x] Add chart type selector (Hourglass, Ancestors, Descendants, Relatives)
-- [x] Interactive navigation by clicking individuals
+- [x] Interactive navigation by clicking individuals in charts
+- [x] Load new GEDCOM files without page reload
+- [x] Upgraded to Vite 7 and latest dependencies
 - [ ] Add custom renderer plugins
 - [ ] Implement export to PNG/SVG/PDF
 - [ ] Add photo support
