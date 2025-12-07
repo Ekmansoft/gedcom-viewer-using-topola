@@ -1,4 +1,4 @@
-# GEDCOM Family Tree Viewer
+# GEDCOM Viewer Using Topola
 
 A modern, interactive web application for visualizing GEDCOM genealogy files built with React, TypeScript, and the Topola library.
 
