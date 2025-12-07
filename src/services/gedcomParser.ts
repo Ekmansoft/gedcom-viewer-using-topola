@@ -13,8 +13,6 @@ export class GedcomParser {
       // Use gedcom library to parse
       const parsed = parseGedcom(content);
       
-      console.log('Parsed GEDCOM structure:', parsed);
-      
       // Transform to our data structure
       const indis: Profile[] = [];
       const fams: Family[] = [];
@@ -31,9 +29,6 @@ export class GedcomParser {
           }
         });
       }
-      
-      console.log('Extracted individuals:', indis.length);
-      console.log('Extracted families:', fams.length);
       
       return { indis, fams };
     } catch (error) {

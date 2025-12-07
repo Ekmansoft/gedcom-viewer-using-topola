@@ -27,11 +27,6 @@ function FileUpload() {
       // Update store
       loadGedcom(data, file.name);
       setRelationshipGraph(graph);
-
-      console.log('GEDCOM loaded:', {
-        profiles: data.indis.length,
-        families: data.fams.length,
-      });
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unknown error';
       setError(message);

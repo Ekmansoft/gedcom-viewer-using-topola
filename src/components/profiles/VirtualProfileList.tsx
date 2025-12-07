@@ -58,7 +58,6 @@ function VirtualProfileList({ profiles }: VirtualProfileListProps) {
                 profile={profile}
                 isSelected={profile.id === selectedProfileId}
                 onClick={() => {
-                  console.log('Profile clicked:', profile.id, profile.firstName, profile.lastName);
                   selectProfile(profile.id);
                 }}
               />

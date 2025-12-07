@@ -22,7 +22,6 @@ export class TopolaDataAdapter {
           sex: 'M'
         });
         processed.husb = unknownId;
-        console.log('⚠️ Created unknown husband for family:', fam.id);
       }
       
       if (!fam.wife) {
@@ -34,7 +33,6 @@ export class TopolaDataAdapter {
           sex: 'F'
         });
         processed.wife = unknownId;
-        console.log('⚠️ Created unknown wife for family:', fam.id);
       }
       
       return processed;
@@ -59,26 +57,6 @@ export class TopolaDataAdapter {
     if (profile.firstName || profile.lastName) {
       result.firstName = profile.firstName || '';
       result.lastName = profile.lastName || '';
-    }
-    
-    // Debug: Log profiles with multiple marriages
-    if (profile.fams && profile.fams.length > 1) {
-      console.log('👥 Profile with multiple marriages:', {
-        id: profile.id,
-        name: `${profile.firstName} ${profile.lastName}`,
-        marriages: profile.fams
-      });
-    }
-    
-    // Special debug for Signe Maria
-    if (profile.id === '@profile-66938338@') {
-      console.log('🎯 Signe Maria Profile Data:', {
-        id: profile.id,
-        fullName: `${profile.firstName} ${profile.lastName}`,
-        sex: profile.sex,
-        fams: profile.fams,
-        famc: profile.famc
-      });
     }
 
     // Family relationships
@@ -119,24 +97,6 @@ export class TopolaDataAdapter {
       result.wife = family.wife;
     }
     
-    // Debug: Log family data to trace the marriage issue
-    if (family.id.includes('66938338') || (family.husb && family.husb.includes('66938338')) || (family.wife && family.wife.includes('66938338'))) {
-      console.log('🔍 Family involving Signe Maria:', {
-        familyId: family.id,
-        husb: family.husb,
-        wife: family.wife,
-        children: family.children
-      });
-    }
-    
-    // Check if husb and wife are the same
-    if (family.husb && family.wife && family.husb === family.wife) {
-      console.warn('⚠️ Family has same person as both husband and wife:', {
-        familyId: family.id,
-        husb: family.husb,
-        wife: family.wife
-      });
-    }
     if (family.children && family.children.length > 0) {
       result.children = family.children;
     }

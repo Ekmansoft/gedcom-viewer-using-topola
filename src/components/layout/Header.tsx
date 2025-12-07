@@ -26,10 +26,6 @@ function Header({ onToggleSidebar }: HeaderProps) {
       const graph = builder.build(data);
       loadGedcom(data, file.name);
       setRelationshipGraph(graph);
-      console.log('New GEDCOM loaded:', {
-        profiles: data.indis.length,
-        families: data.fams.length,
-      });
     } catch (err) {
       console.error('Error loading GEDCOM:', err);
       alert('Failed to load GEDCOM file: ' + (err instanceof Error ? err.message : 'Unknown error'));

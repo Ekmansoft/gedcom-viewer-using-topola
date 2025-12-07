@@ -97,8 +97,18 @@ const TopolaChart = forwardRef<TopolaChartHandle, TopolaChartProps>(({ gedcomDat
     const handleMouseDown = (e: MouseEvent) => {
       // Only drag on left button and not on interactive elements
       if (e.button !== 0) return;
-      const target = e.target as HTMLElement;
-      if (target.tagName === 'text' || target.tagName === 'a') return;
+      
+      const target = e.target as SVGElement;
+      
+      // Don't start panning if clicking on a person or family box
+      // Check if the target or any parent has the 'indi' or 'fam' class
+      let element: SVGElement | null = target;
+      while (element && element !== container) {
+        if (element.classList && (element.classList.contains('indi') || element.classList.contains('fam'))) {
+          return; // This is a clickable element, don't start panning
+        }
+        element = element.parentElement as SVGElement;
+      }
       
       isPanning = true;
       isPanningRef.current = true;
@@ -157,8 +167,6 @@ const TopolaChart = forwardRef<TopolaChartHandle, TopolaChartProps>(({ gedcomDat
       return;
     }
 
-    console.log('TopolaChart re-rendering for profile:', selectedProfileId, 'chartType:', chartType);
-
     // Add unique ID to SVG for selector
     svgRef.current.id = chartIdRef.current;
 
@@ -166,10 +174,6 @@ const TopolaChart = forwardRef<TopolaChartHandle, TopolaChartProps>(({ gedcomDat
       // Convert data to Topola format
       const adapter = new TopolaDataAdapter();
       const topolaData = adapter.convertToTopolaFormat(gedcomData);
-      
-      // Debug: Check a few sample individuals
-      const sampleIndis = topolaData.indis.slice(0, 3);
-      console.log('Sample Topola data individuals:', JSON.stringify(sampleIndis, null, 2).substring(0, 500));
 
       // Clear previous chart
       d3.select(svgRef.current).selectAll('*').remove();
@@ -189,7 +193,6 @@ const TopolaChart = forwardRef<TopolaChartHandle, TopolaChartProps>(({ gedcomDat
         case 'relatives':
           // RelativesChart can cause infinite loops with some data
           // Fall back to HourglassChart for safety
-          console.warn('RelativesChart has known issues, using HourglassChart instead');
           ChartClass = HourglassChart;
           break;
         default:
@@ -218,23 +221,6 @@ const TopolaChart = forwardRef<TopolaChartHandle, TopolaChartProps>(({ gedcomDat
       chartHandle.render({
         startIndi: selectedProfileId,
       });
-
-      // Debug: Check what text elements were rendered
-      setTimeout(() => {
-        if (svgRef.current) {
-          const allText = d3.select(svgRef.current).selectAll('text').nodes() as SVGTextElement[];
-          const sampleText = allText.slice(0, 10).map((t: SVGTextElement) => ({
-            content: t.textContent,
-            class: t.getAttribute('class'),
-            x: t.getAttribute('x'),
-            y: t.getAttribute('y'),
-          }));
-          console.log('Sample text elements in chart:', sampleText);
-          
-          // Also log what the chart handle has access to
-          console.log('Chart data sample:', topolaData.indis[0]);
-        }
-      }, 50);
 
       // Reset zoom level when chart changes
       zoomLevelRef.current = 1;
@@ -271,13 +257,6 @@ const TopolaChart = forwardRef<TopolaChartHandle, TopolaChartProps>(({ gedcomDat
             const viewBoxHeight = bbox.height + padding * 2;
             
             svg.setAttribute('viewBox', `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`);
-            
-            console.log('SVG sized:', { 
-              svgWidth, 
-              svgHeight, 
-              viewBox: `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`,
-              bbox 
-            });
           } catch (error) {
             console.error('Error sizing SVG:', error);
           }
@@ -304,37 +283,8 @@ const TopolaChart = forwardRef<TopolaChartHandle, TopolaChartProps>(({ gedcomDat
   const centerOnSelectedProfile = () => {
     if (!containerRef.current || !svgRef.current) return;
 
-    console.log('Attempting to center on profile:', selectedProfileId);
-
     try {
       const svg = d3.select(svgRef.current);
-      
-      // Debug: Log some sample elements to understand the structure
-      const sampleGroups = svg.selectAll('g').nodes().slice(0, 10) as SVGElement[];
-      console.log('Sample SVG groups:', sampleGroups.map(el => {
-        const attrs: any = {};
-        for (let i = 0; i < el.attributes.length; i++) {
-          const attr = el.attributes[i];
-          attrs[attr.name] = attr.value;
-        }
-        return {
-          tagName: el.tagName,
-          attributes: attrs,
-          childrenCount: el.children.length,
-          textContent: el.textContent?.substring(0, 50)
-        };
-      }));
-      
-      // Also check for rectangles and other elements
-      const sampleRects = svg.selectAll('rect').nodes().slice(0, 10) as SVGElement[];
-      console.log('Sample SVG rects:', sampleRects.map(el => {
-        const attrs: any = {};
-        for (let i = 0; i < el.attributes.length; i++) {
-          const attr = el.attributes[i];
-          attrs[attr.name] = attr.value;
-        }
-        return attrs;
-      }));
       
       // Try multiple selectors to find the profile element
       const cleanId = selectedProfileId.replace(/@/g, '');
@@ -360,7 +310,6 @@ const TopolaChart = forwardRef<TopolaChartHandle, TopolaChartProps>(({ gedcomDat
         try {
           const element = svg.select(selector).node() as SVGElement;
           if (element) {
-            console.log('Found profile with selector:', selector);
             profileElement = element;
             break;
           }
@@ -372,7 +321,6 @@ const TopolaChart = forwardRef<TopolaChartHandle, TopolaChartProps>(({ gedcomDat
       // If still not found, search through all g elements for text content match
       if (!profileElement) {
         const allGroups = svg.selectAll('g').nodes() as SVGElement[];
-        console.log(`Searching through ${allGroups.length} group elements...`);
         
         // Find a group element that:
         // 1. Contains the profile ID in its text content
@@ -394,21 +342,14 @@ const TopolaChart = forwardRef<TopolaChartHandle, TopolaChartProps>(({ gedcomDat
           }
           return false;
         }) || null;
-        
-        if (profileElement) {
-          console.log('Found profile by searching groups, tag:', profileElement.tagName, 'children:', profileElement.children.length);
-        }
       }
       
       if (profileElement) {
-        console.log('Centering on found profile element');
         scrollToElement(profileElement);
       } else {
-        console.log('Profile element not found, centering on content. ID searched:', selectedProfileId, cleanId);
         scrollToCenter();
       }
     } catch (error) {
-      console.log('Error finding profile, using default centering:', error);
       scrollToCenter();
     }
   };
@@ -419,14 +360,12 @@ const TopolaChart = forwardRef<TopolaChartHandle, TopolaChartProps>(({ gedcomDat
     try {
       // Make sure element has getBBox method (some SVG elements don't)
       if (typeof (element as any).getBBox !== 'function') {
-        console.log('Element does not have getBBox, trying to find parent with bbox');
         // Try to find a parent or child that has getBBox
         let bboxElement = element.parentElement as SVGElement;
         while (bboxElement && typeof (bboxElement as any).getBBox !== 'function') {
           bboxElement = bboxElement.parentElement as SVGElement;
         }
         if (!bboxElement) {
-          console.log('Could not find element with bbox, centering on content');
           scrollToCenter();
           return;
         }
@@ -459,18 +398,6 @@ const TopolaChart = forwardRef<TopolaChartHandle, TopolaChartProps>(({ gedcomDat
       // Calculate scroll position to center this point in the viewport
       const scrollX = relativeX - container.clientWidth / 2;
       const scrollY = relativeY - container.clientHeight / 2;
-      
-      console.log('Scrolling to element:', { 
-        elementCenterX, 
-        elementCenterY, 
-        viewBoxX, 
-        viewBoxY,
-        relativeX,
-        relativeY,
-        scrollX, 
-        scrollY,
-        currentZoom 
-      });
       
       container.scrollTo({
         left: Math.max(0, scrollX),
@@ -506,10 +433,8 @@ const TopolaChart = forwardRef<TopolaChartHandle, TopolaChartProps>(({ gedcomDat
         top: Math.max(0, scrollY),
         behavior: 'smooth'
       });
-      
-      console.log('Centering chart:', { svgWidth, svgHeight, scrollX, scrollY, currentZoom });
     } catch (error) {
-      console.log('Could not center content:', error);
+      // Silently fail - centering is optional
     }
   };
 
