@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { Menu, FileText, Settings, FolderOpen } from 'lucide-react';
-import { useGedcomStore } from '@/store/gedcomStore';
+import { useFamilyStore } from '@/store/familyStore';
 import { GedcomParser } from '@/services/gedcomParser';
 import { RelationshipGraphBuilder } from '@/services/relationshipGraphBuilder';
 
@@ -9,10 +9,10 @@ interface HeaderProps {
 }
 
 function Header({ onToggleSidebar }: HeaderProps) {
-  const fileName = useGedcomStore((state) => state.fileName);
-  const profileCount = useGedcomStore((state) => state.gedcomData?.indis.length || 0);
-  const loadGedcom = useGedcomStore((state) => state.loadGedcom);
-  const setRelationshipGraph = useGedcomStore((state) => state.setRelationshipGraph);
+  const fileName = useFamilyStore((state) => state.fileName);
+  const profileCount = useFamilyStore((state) => state.familyData?.indis.length || 0);
+  const loadFamilyTree = useFamilyStore((state) => state.loadFamilyTree);
+  const setRelationshipGraph = useFamilyStore((state) => state.setRelationshipGraph);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +24,7 @@ function Header({ onToggleSidebar }: HeaderProps) {
       const data = await parser.parseFile(file);
       const builder = new RelationshipGraphBuilder();
       const graph = builder.build(data);
-      loadGedcom(data, file.name);
+      loadFamilyTree(data, file.name);
       setRelationshipGraph(graph);
     } catch (err) {
       console.error('Error loading GEDCOM:', err);

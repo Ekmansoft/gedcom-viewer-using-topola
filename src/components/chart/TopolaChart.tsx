@@ -1,10 +1,10 @@
 import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import * as d3 from 'd3';
 import * as topola from 'topola';
-import type { GedcomData } from '@/types/gedcom';
+import type { FamilyData } from '@/types/family';
 import type { ChartType } from '@/types/chart';
 import { TopolaDataAdapter } from '@/services/topolaDataAdapter';
-import { useGedcomStore } from '@/store/gedcomStore';
+import { useFamilyStore } from '@/store/familyStore';
 import './topola.css';
 
 // Extract chart types from topola
@@ -19,7 +19,7 @@ const {
 } = topola as any;
 
 interface TopolaChartProps {
-  gedcomData: GedcomData;
+  gedcomData: FamilyData;
   selectedProfileId: string;
   chartType: ChartType;
   zoom?: number;
@@ -34,7 +34,7 @@ const TopolaChart = forwardRef<TopolaChartHandle, TopolaChartProps>(({ gedcomDat
   const svgRef = useRef<SVGSVGElement>(null);
   const chartHandleRef = useRef<any>(null);
   const chartIdRef = useRef(`topola-chart-${Math.random().toString(36).substr(2, 9)}`);
-  const selectProfile = useGedcomStore((state) => state.selectProfile);
+  const selectProfile = useFamilyStore((state) => state.selectProfile);
   const isPanningRef = useRef(false);
   const zoomLevelRef = useRef(1);
 

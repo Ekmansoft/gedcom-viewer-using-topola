@@ -6,7 +6,7 @@ import type { Profile } from '@/types/gedcom';
 
 function ProfileList() {
   const [searchQuery, setSearchQuery] = useState('');
-  const profiles = useGedcomStore((state) => state.getAllProfiles());
+  const profiles = useFamilyStore((state) => state.getAllProfiles());
   
   // Filter profiles based on search
   const filteredProfiles = useMemo(() => {

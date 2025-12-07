@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useGedcomStore } from '@/store/gedcomStore';
+import { useFamilyStore } from '@/store/familyStore';
 import { useChartStore } from '@/store/chartStore';
 import { TopolaDataAdapter } from '@/services/topolaDataAdapter';
 import ChartTypeSelector from './ChartTypeSelector';
@@ -9,8 +9,8 @@ import { ZoomIn, ZoomOut, Maximize2, Target } from 'lucide-react';
 function ChartView() {
   const [zoom, setZoom] = useState(1);
   const chartRef = useRef<TopolaChartHandle>(null);
-  const selectedProfileId = useGedcomStore((state) => state.selectedProfileId);
-  const gedcomData = useGedcomStore((state) => state.gedcomData);
+  const selectedProfileId = useFamilyStore((state) => state.selectedProfileId);
+  const familyData = useFamilyStore((state) => state.familyData);
   const chartType = useChartStore((state) => state.chartType);
 
   if (!selectedProfileId) {
@@ -24,7 +24,7 @@ function ChartView() {
     );
   }
 
-  if (!gedcomData) {
+  if (!familyData) {
     return (
       <div className="flex items-center justify-center h-full">
         <div className="text-center text-gray-500">
@@ -93,7 +93,7 @@ function ChartView() {
       <div className="flex-1 overflow-hidden">
         <TopolaChart
           ref={chartRef}
-          gedcomData={gedcomData}
+          gedcomData={familyData}
           selectedProfileId={selectedProfileId}
           chartType={chartType}
           zoom={zoom}

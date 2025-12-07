@@ -1,16 +1,16 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import type { GedcomData, Profile, Family, RelationshipGraph } from '@/types/gedcom';
+import type { FamilyData, Profile, Family, RelationshipGraph } from '@/types/family';
 
-interface GedcomStore {
+interface FamilyStore {
   // State
-  gedcomData: GedcomData | null;
+  familyData: FamilyData | null;
   relationshipGraph: RelationshipGraph | null;
   selectedProfileId: string | null;
   fileName: string | null;
   
   // Actions
-  loadGedcom: (data: GedcomData, fileName?: string) => void;
+  loadFamilyTree: (data: FamilyData, fileName?: string) => void;
   setRelationshipGraph: (graph: RelationshipGraph) => void;
   selectProfile: (id: string | null) => void;
   clearData: () => void;
@@ -22,18 +22,18 @@ interface GedcomStore {
   getSelectedProfile: () => Profile | undefined;
 }
 
-export const useGedcomStore = create<GedcomStore>()(
+export const useFamilyStore = create<FamilyStore>()(
   immer((set, get) => ({
     // Initial state
-    gedcomData: null,
+    familyData: null,
     relationshipGraph: null,
     selectedProfileId: null,
     fileName: null,
     
     // Actions
-    loadGedcom: (data, fileName) => {
+    loadFamilyTree: (data, fileName) => {
       set((state) => {
-        state.gedcomData = data;
+        state.familyData = data;
         state.fileName = fileName || null;
         // Don't reset selected profile if reloading same file
         if (!state.selectedProfileId && data.indis.length > 0) {
@@ -56,7 +56,7 @@ export const useGedcomStore = create<GedcomStore>()(
     
     clearData: () => {
       set((state) => {
-        state.gedcomData = null;
+        state.familyData = null;
         state.relationshipGraph = null;
         state.selectedProfileId = null;
         state.fileName = null;
@@ -65,18 +65,18 @@ export const useGedcomStore = create<GedcomStore>()(
     
     // Selectors
     getProfile: (id) => {
-      const { gedcomData } = get();
-      return gedcomData?.indis.find((i) => i.id === id);
+      const { familyData } = get();
+      return familyData?.indis.find((i) => i.id === id);
     },
     
     getFamily: (id) => {
-      const { gedcomData } = get();
-      return gedcomData?.fams.find((f) => f.id === id);
+      const { familyData } = get();
+      return familyData?.fams.find((f) => f.id === id);
     },
     
     getAllProfiles: () => {
-      const { gedcomData } = get();
-      return gedcomData?.indis || [];
+      const { familyData } = get();
+      return familyData?.indis || [];
     },
     
     getSelectedProfile: () => {

@@ -1,5 +1,7 @@
 /**
- * Core data types for GEDCOM data structure
+ * Core data types for family tree data structure
+ * This format is source-agnostic and can be populated from GEDCOM files,
+ * Geni API, or other genealogy data sources
  */
 
 export interface DateInfo {
@@ -67,7 +69,7 @@ export interface Family {
   notes?: string[];
 }
 
-export interface GedcomData {
+export interface FamilyData {
   indis: Profile[];
   fams: Family[];
   metadata?: {

@@ -10,8 +10,8 @@ interface VirtualProfileListProps {
 
 function VirtualProfileList({ profiles }: VirtualProfileListProps) {
   const parentRef = useRef<HTMLDivElement>(null);
-  const selectedProfileId = useGedcomStore((state) => state.selectedProfileId);
-  const selectProfile = useGedcomStore((state) => state.selectProfile);
+  const selectedProfileId = useFamilyStore((state) => state.selectedProfileId);
+  const selectProfile = useFamilyStore((state) => state.selectProfile);
 
   const virtualizer = useVirtualizer({
     count: profiles.length,

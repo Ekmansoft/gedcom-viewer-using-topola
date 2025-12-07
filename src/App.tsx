@@ -1,14 +1,14 @@
-import { useGedcomStore } from '@/store/gedcomStore';
+import { useFamilyStore } from '@/store/familyStore';
 import MainLayout from '@/components/layout/MainLayout';
 import WelcomeScreen from '@/components/layout/WelcomeScreen';
 import ErrorBoundary from '@/components/common/ErrorBoundary';
 
 function App() {
-  const gedcomData = useGedcomStore((state) => state.gedcomData);
+  const familyData = useFamilyStore((state) => state.familyData);
   
   return (
     <ErrorBoundary>
-      {gedcomData ? <MainLayout /> : <WelcomeScreen />}
+      {familyData ? <MainLayout /> : <WelcomeScreen />}
     </ErrorBoundary>
   );
 }

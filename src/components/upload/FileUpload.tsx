@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Upload, FileText, AlertCircle } from 'lucide-react';
-import { useGedcomStore } from '@/store/gedcomStore';
+import { useFamilyStore } from '@/store/familyStore';
 import { GedcomParser } from '@/services/gedcomParser';
 import { RelationshipGraphBuilder } from '@/services/relationshipGraphBuilder';
 
 function FileUpload() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const loadGedcom = useGedcomStore((state) => state.loadGedcom);
-  const setRelationshipGraph = useGedcomStore((state) => state.setRelationshipGraph);
+  const loadFamilyTree = useFamilyStore((state) => state.loadFamilyTree);
+  const setRelationshipGraph = useFamilyStore((state) => state.setRelationshipGraph);
 
   const handleFile = async (file: File) => {
     setIsLoading(true);
@@ -25,7 +25,7 @@ function FileUpload() {
       const graph = builder.build(data);
 
       // Update store
-      loadGedcom(data, file.name);
+      loadFamilyTree(data, file.name);
       setRelationshipGraph(graph);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unknown error';

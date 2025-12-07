@@ -1,4 +1,4 @@
-import type { GedcomData, Profile, Family } from '@/types/gedcom';
+import type { FamilyData, Profile, Family } from '@/types/family';
 
 /**
  * Convert our GEDCOM data format to Topola's expected format
@@ -7,7 +7,7 @@ export class TopolaDataAdapter {
   /**
    * Convert to Topola JsonGedcomData format
    */
-  convertToTopolaFormat(data: GedcomData): any {
+  convertToTopolaFormat(data: FamilyData): any {
     // Create placeholder individuals for missing spouses
     const unknownIndividuals: any[] = [];
     const processedFamilies = data.fams.map(fam => {

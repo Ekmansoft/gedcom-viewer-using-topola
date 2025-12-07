@@ -1,13 +1,13 @@
-import type { GedcomData, RelationshipGraph, ProfileNode, Profile } from '@/types/gedcom';
+import type { FamilyData, RelationshipGraph, ProfileNode, Profile } from '@/types/family';
 
 /**
  * Build optimized relationship graph from GEDCOM data
  */
 export class RelationshipGraphBuilder {
   /**
-   * Build relationship graph from GEDCOM data
+   * Build relationship graph from family tree data
    */
-  build(data: GedcomData): RelationshipGraph {
+  build(data: FamilyData): RelationshipGraph {
     const individuals = new Map<string, ProfileNode>();
     const families = new Map(data.fams.map(f => [f.id, f]));
     

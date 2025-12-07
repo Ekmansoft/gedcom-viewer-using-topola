@@ -1,5 +1,5 @@
 import { parse as parseGedcom } from 'gedcom';
-import type { GedcomData, Profile, Family } from '@/types/gedcom';
+import type { FamilyData, Profile, Family } from '@/types/family';
 
 /**
  * Parse GEDCOM file content into structured data
@@ -8,7 +8,7 @@ export class GedcomParser {
   /**
    * Parse GEDCOM string content
    */
-  async parse(content: string): Promise<GedcomData> {
+  async parse(content: string): Promise<FamilyData> {
     try {
       // Use gedcom library to parse
       const parsed = parseGedcom(content);
@@ -138,7 +138,7 @@ export class GedcomParser {
   /**
    * Parse GEDCOM file (browser)
    */
-  async parseFile(file: File): Promise<GedcomData> {
+  async parseFile(file: File): Promise<FamilyData> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       
