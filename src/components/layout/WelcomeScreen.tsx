@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Upload } from 'lucide-react';
-import FileUpload from '@/components/upload/FileUpload';
+import DataSourceSelector from '@/components/dataSource/DataSourceSelector';
 
 function WelcomeScreen() {
   const [isUploading, setIsUploading] = useState(false);
@@ -10,7 +10,7 @@ function WelcomeScreen() {
       <div className="max-w-2xl w-full mx-auto px-6">
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold text-gray-900 mb-4">
-            GEDCOM Family Tree Viewer
+            Family Tree Viewer
           </h1>
           <p className="text-xl text-gray-600">
             Visualize and explore your family history with interactive genealogy charts
@@ -18,15 +18,15 @@ function WelcomeScreen() {
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-          <FileUpload />
+          <DataSourceSelector />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
           <div className="bg-white rounded-lg p-6 shadow-md">
             <div className="text-blue-600 text-3xl mb-3">📁</div>
-            <h3 className="font-semibold text-gray-900 mb-2">Import GEDCOM</h3>
+            <h3 className="font-semibold text-gray-900 mb-2">Multiple Sources</h3>
             <p className="text-sm text-gray-600">
-              Upload your .ged file to get started
+              GEDCOM files or Geni.com connection
             </p>
           </div>
           

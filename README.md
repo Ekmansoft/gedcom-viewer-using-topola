@@ -1,10 +1,11 @@
-# GEDCOM Viewer Using Topola
+# Family Tree Viewer
 
-A modern, interactive web application for visualizing GEDCOM genealogy files built with React, TypeScript, and the Topola library.
+A modern, interactive web application for visualizing family tree data from GEDCOM files or Geni.com, built with React, TypeScript, and the Topola library.
 
 ## Features
 
-- 📁 **GEDCOM Import** - Upload and parse .ged files
+- 📁 **Multiple Data Sources** - GEDCOM files or Geni.com API connection
+- 🌐 **Geni Integration** - Connect to your Geni.com account and visualize your online family tree
 - 🔍 **Search & Filter** - Find profiles instantly with real-time search
 - 🌳 **Multiple Chart Types** - Ancestor, descendant, hourglass, and relatives views
 - 🎨 **Custom Renderers** - Extensible plugin system for custom visualizations
@@ -30,12 +31,20 @@ cd gedcom-viewer
 npm install
 ```
 
-3. Start the development server:
+3. (Optional) Configure Geni API:
+   - Copy `.env.example` to `.env.local`
+   - Register an app at [Geni Developer Portal](https://www.geni.com/platform/developer)
+   - Add your Client ID to `.env.local`:
+     ```
+     VITE_GENI_CLIENT_ID=your_client_id_here
+     ```
+
+4. Start the development server:
 ```bash
 npm run dev
 ```
 
-4. Open your browser to `http://localhost:5173`
+5. Open your browser to `http://localhost:5173`
 
 ## Demo Files
 
@@ -49,11 +58,24 @@ Load these files to explore different chart layouts and data structures.
 
 ## Usage
 
-1. **Upload a GEDCOM file** - Drag and drop or click to browse for a .ged file
+### Loading Data
+
+**Option 1: GEDCOM File**
+1. Click on the "GEDCOM File" tab
+2. Drag and drop or click to browse for a .ged file
    - Demo files are included in the project root for testing
-2. **Browse profiles** - Search and filter through the profile list
-3. **Select a profile** - Click on any profile to view their family tree
-4. **Choose chart type** - Switch between different visualization modes:
+
+**Option 2: Geni.com** (requires configuration)
+1. Click on the "Geni.com" tab
+2. Click "Connect with Geni" to authenticate
+3. Choose load options (ancestors, descendants, generations)
+4. Click "Load Family Tree"
+
+### Viewing Data
+
+1. **Browse profiles** - Search and filter through the profile list
+2. **Select a profile** - Click on any profile to view their family tree
+3. **Choose chart type** - Switch between different visualization modes:
    - ⏳ Hourglass - Ancestors above, descendants below
    - ⬆️ Ancestors - Full ancestor tree
    - ⬇️ Descendants - All descendants
