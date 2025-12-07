@@ -1,0 +1,60 @@
+/* Topola chart styles */
+.indi rect,
+.fam rect {
+  fill: white;
+  stroke: #333;
+  stroke-width: 1px;
+}
+
+.indi text,
+.fam text {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-size: 12px;
+  fill: #333;
+}
+
+.indi.M rect {
+  fill: #e3f2fd;
+}
+
+.indi.F rect {
+  fill: #fce4ec;
+}
+
+.indi:hover rect,
+.fam:hover rect {
+  stroke: #2196f3;
+  stroke-width: 2px;
+  cursor: pointer;
+}
+
+.link {
+  fill: none;
+  stroke: #999;
+  stroke-width: 1px;
+}
+
+.additional-marriage {
+  stroke-dasharray: 4, 2;
+}
+
+.name {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.given-names,
+.first-names {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.details {
+  font-size: 11px;
+  fill: #666;
+}
+
+.id {
+  font-size: 10px;
+  fill: #999;
+}

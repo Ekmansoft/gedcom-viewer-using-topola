@@ -1,0 +1,147 @@
+# GEDCOM Family Tree Viewer
+
+A modern, interactive web application for visualizing GEDCOM genealogy files built with React, TypeScript, and the Topola library.
+
+## Features
+
+- 📁 **GEDCOM Import** - Upload and parse .ged files
+- 🔍 **Search & Filter** - Find profiles instantly with real-time search
+- 🌳 **Multiple Chart Types** - Ancestor, descendant, hourglass, and relatives views
+- 🎨 **Custom Renderers** - Extensible plugin system for custom visualizations
+- ⚡ **High Performance** - Virtual scrolling for thousands of profiles
+- 💾 **Local Storage** - Save your data in the browser with IndexedDB
+- 📱 **Responsive Design** - Works on desktop, tablet, and mobile
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ and npm
+
+### Installation
+
+1. Navigate to the project directory:
+```bash
+cd gedcom-viewer
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+4. Open your browser to `http://localhost:5173`
+
+## Demo Files
+
+The project includes several demo GEDCOM files for testing:
+
+- **sample-family.ged** - Simple 3-generation family (8 individuals)
+- **demo-family-3gen.ged** - More complex 3-generation tree (11 individuals) from John Sr Doe lineage
+- **Queen.ged** - Extensive royal genealogy tracing European royalty back through ancient lineages
+
+Load these files to explore different chart layouts and data structures.
+
+## Usage
+
+1. **Upload a GEDCOM file** - Drag and drop or click to browse for a .ged file
+   - Demo files are included in the project root for testing
+2. **Browse profiles** - Search and filter through the profile list
+3. **Select a profile** - Click on any profile to view their family tree
+4. **Choose chart type** - Switch between different visualization modes:
+   - ⏳ Hourglass - Ancestors above, descendants below
+   - ⬆️ Ancestors - Full ancestor tree
+   - ⬇️ Descendants - All descendants
+   - 👥 Relatives - Close family members
+5. **Navigate the tree** - Click on any person in the chart to recenter on them
+6. **Zoom controls** - Use the zoom buttons to adjust the view
+
+## Project Structure
+
+```
+gedcom-viewer/
+├── src/
+│   ├── components/
+│   │   ├── chart/          # Chart visualization components
+│   │   ├── common/         # Reusable UI components
+│   │   ├── layout/         # Layout components
+│   │   ├── profiles/       # Profile list components
+│   │   └── upload/         # File upload components
+│   ├── services/           # Business logic & data processing
+│   │   ├── gedcomParser.ts
+│   │   └── relationshipGraphBuilder.ts
+│   ├── store/              # Zustand state management
+│   ├── types/              # TypeScript type definitions
+│   └── App.tsx
+├── docs/                   # Documentation
+└── package.json
+```
+
+## Technology Stack
+
+- **React 18** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **Zustand** - State management
+- **Topola** - Genealogy visualization library
+- **D3.js** - Data visualization
+- **Tailwind CSS** - Styling
+- **@tanstack/react-virtual** - Virtual scrolling
+- **Dexie.js** - IndexedDB wrapper
+
+## Development
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+- `npm test` - Run tests
+
+### Adding Custom Renderers
+
+See the [Plugin Development Guide](../GEDCOM_Plugin_Development_Guide.md) for detailed instructions on creating custom chart renderers and chart types.
+
+## Documentation
+
+- [Requirements](../GEDCOM_Frontend_Requirements.md)
+- [API Specifications](../GEDCOM_API_Specifications.md)
+- [Component Architecture](../GEDCOM_Component_Architecture.md)
+- [Plugin Development Guide](../GEDCOM_Plugin_Development_Guide.md)
+
+## Roadmap
+
+- [x] Integrate Topola chart rendering
+- [x] Add chart type selector (Hourglass, Ancestors, Descendants, Relatives)
+- [x] Interactive navigation by clicking individuals
+- [ ] Add custom renderer plugins
+- [ ] Implement export to PNG/SVG/PDF
+- [ ] Add photo support
+- [ ] Implement family relationship calculator
+- [ ] Add timeline view
+- [ ] Support for GEDCOM 7.0 format
+- [ ] Multi-language support
+
+## Contributing
+
+Contributions are welcome! Please read the documentation and submit pull requests.
+
+## License
+
+MIT License - See LICENSE file for details
+
+## Acknowledgments
+
+- [Topola](https://github.com/PeWu/topola) - Genealogy visualization library
+- [gedcom](https://github.com/tmcw/gedcom) - GEDCOM parser library
+- GEDCOM standard by FamilySearch
+
+## Support
+
+For issues and questions, please open an issue on GitHub.
